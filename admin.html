@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin do Catálogo</title>
+
+  <!-- CSS único do projeto -->
+  <link rel="stylesheet" href="style.css" />
+
+  <script>
+    // Evita “flash” de tema errado (se você usar essa lógica depois)
+    // Aqui fica neutro: admin já está no estilo light por padrão.
+  </script>
+</head>
+
+<body class="admin-body">
+
+  <!-- ===================== TOPBAR ADMIN (NOVO) ===================== -->
+  <header class="admin-topbar" role="banner">
+    <div class="admin-topbar__container">
+      <div class="admin-topbar__left">
+        <a class="admin-brand2" href="#">
+          <div class="admin-brand2__logo" aria-hidden="true">
+            <!-- Ícone simples (pode trocar pelo logo real depois) -->
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5-4.5-4.5 1.41-1.41L11 13.67l6.59-6.59L19 8.5 11 16.5z"/>
+            </svg>
+          </div>
+          <div class="admin-brand2__text">
+            <strong>Admin</strong>
+            <span class="muted">Gerenciar catálogo</span>
+          </div>
+        </a>
+
+        <div class="admin-topbar__search">
+          <svg class="admin-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input id="adminSearch" type="text" placeholder="Buscar no admin (ex.: produto, categoria)..." />
+        </div>
+      </div>
+
+      <div class="admin-topbar__right">
+        <a class="btn btn--ghost btn--pill" href="catalogo.html" target="_blank" rel="noopener">
+          Visualizar Catálogo
+        </a>
+
+        <button class="btn btn--primary btn--pill" id="btnSaveAll" type="button">
+          Salvar
+        </button>
+
+        <button class="icon-btn" id="btnMobileNav" type="button" aria-label="Abrir menu">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== SHELL ===================== -->
+  <div class="admin-shell2">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="admin-sidebar" aria-label="Menu do Admin" id="adminSidebar">
+      <div class="admin-sidebar__section">
+        <div class="admin-sidebar__title">Configurações</div>
+
+        <button class="admin-tab2 is-active" type="button" data-tab="tabStore">
+          <span class="admin-tab2__icon">🏪</span>
+          <span class="admin-tab2__text">
+            <strong>Loja</strong>
+            <small class="muted">nome, contato, aviso</small>
+          </span>
+        </button>
+
+        <button class="admin-tab2" type="button" data-tab="tabTheme">
+          <span class="admin-tab2__icon">🎨</span>
+          <span class="admin-tab2__text">
+            <strong>Tema</strong>
+            <small class="muted">cores, fontes</small>
+          </span>
+        </button>
+
+        <button class="admin-tab2" type="button" data-tab="tabMenu">
+          <span class="admin-tab2__icon">🧭</span>
+          <span class="admin-tab2__text">
+            <strong>Menu</strong>
+            <small class="muted">links/atalhos</small>
+          </span>
+        </button>
+      </div>
+
+      <div class="admin-sidebar__section">
+        <div class="admin-sidebar__title">Catálogo</div>
+
+        <button class="admin-tab2" type="button" data-tab="tabCategories">
+          <span class="admin-tab2__icon">🗂️</span>
+          <span class="admin-tab2__text">
+            <strong>Categorias</strong>
+            <small class="muted">ordem/visibilidade</small>
+          </span>
+        </button>
+
+        <button class="admin-tab2" type="button" data-tab="tabProducts">
+          <span class="admin-tab2__icon">🛍️</span>
+          <span class="admin-tab2__text">
+            <strong>Produtos</strong>
+            <small class="muted">cadastro/edição</small>
+          </span>
+        </button>
+
+        <button class="admin-tab2" type="button" data-tab="tabBanners">
+          <span class="admin-tab2__icon">🖼️</span>
+          <span class="admin-tab2__text">
+            <strong>Banners</strong>
+            <small class="muted">carrossel</small>
+          </span>
+        </button>
+      </div>
+
+      <div class="admin-sidebar__section">
+        <div class="admin-sidebar__title">Dados</div>
+
+        <button class="admin-tab2" type="button" data-tab="tabStats">
+          <span class="admin-tab2__icon">📈</span>
+          <span class="admin-tab2__text">
+            <strong>Estatísticas</strong>
+            <small class="muted">visitas/pedidos</small>
+          </span>
+        </button>
+
+        <button class="admin-tab2" type="button" data-tab="tabBackup">
+          <span class="admin-tab2__icon">💾</span>
+          <span class="admin-tab2__text">
+            <strong>Backup</strong>
+            <small class="muted">exportar/importar</small>
+          </span>
+        </button>
+      </div>
+
+      <div class="admin-sidebar__footer">
+        <div class="admin-mini">
+          <div class="admin-mini__avatar">A</div>
+          <div class="admin-mini__info">
+            <strong>Administrador</strong>
+            <span class="muted">Painel do catálogo</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== Conteúdo ===== -->
+    <main class="admin-main" aria-label="Conteúdo do Admin">
+
+      <!-- Header do conteúdo (breadcrumb simples) -->
+      <div class="admin-pagehead">
+        <div>
+          <h1 class="admin-title">Painel do Catálogo</h1>
+          <p class="admin-subtitle">Gerencie produtos, categorias, banners e o tema do seu site.</p>
+        </div>
+
+        <div class="admin-pagehead__actions">
+          <button class="btn btn--ghost btn--pill" id="btnResetDemo" type="button">Reset (demo)</button>
+          <button class="btn btn--primary btn--pill" id="btnQuickAddProduct" type="button">+ Produto</button>
+        </div>
+      </div>
+
+      <!-- ===================== TAB: LOJA ===================== -->
+      <section class="tab2 is-active" id="tabStore">
+        <div class="card card--soft">
+          <div class="card__header2">
+            <div>
+              <h3 class="card__title2">Dados da Loja</h3>
+              <p class="card__subtitle2">Nome, WhatsApp, aviso de loja, rodapé e informações.</p>
+            </div>
+            <span class="badge">LocalStorage</span>
+          </div>
+
+          <div class="form-grid2">
+            <label class="field2">
+              <span>Nome da loja</span>
+              <input id="store_name" type="text" placeholder="Minha Loja" />
+            </label>
+
+            <label class="field2">
+              <span>WhatsApp (DDD + número)</span>
+              <input id="store_whatsapp" type="text" placeholder="5599999999999" />
+              <small class="hint">Sem espaços. Ex.: 55 + DDD + número</small>
+            </label>
+
+            <label class="field2 field2--full">
+              <span>Aviso do site (barra no topo)</span>
+              <input id="store_notice" type="text" placeholder="Ex.: Promoções por tempo limitado!" />
+            </label>
+
+            <label class="field2">
+              <span>Loja está:</span>
+              <select id="store_open">
+                <option value="open">Aberta</option>
+                <option value="closed">Fechada</option>
+              </select>
+            </label>
+
+            <label class="field2">
+              <span>Mostrar preços:</span>
+              <select id="store_showPrices">
+                <option value="yes">Sim</option>
+                <option value="no">Não</option>
+              </select>
+            </label>
+
+            <label class="field2 field2--full">
+              <span>Rodapé</span>
+              <input id="store_footer" type="text" placeholder="© 2026 Minha Loja" />
+            </label>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn--primary btn--pill" id="btnStoreSave" type="button">Salvar Loja</button>
+            <button class="btn btn--ghost btn--pill" id="btnStoreLoad" type="button">Recarregar</button>
+          </div>
+        </div>
+
+        <div class="split2">
+          <div class="card card--soft">
+            <div class="card__header2">
+              <div>
+                <h3 class="card__title2">Mensagem do WhatsApp</h3>
+                <p class="card__subtitle2">Use {NOME}, {PRECO}, {SKU}, {LINK}</p>
+              </div>
+            </div>
+            <label class="field2 field2--full">
+              <span>Template</span>
+              <textarea id="store_whatsTemplate" rows="4" placeholder="Olá! Quero pedir o produto: {NOME} - {PRECO}"></textarea>
+            </label>
+            <div class="actions">
+              <button class="btn btn--primary btn--pill" id="btnTemplateSave" type="button">Salvar Template</button>
+            </div>
+          </div>
+
+          <div class="card card--soft">
+            <div class="card__header2">
+              <div>
+                <h3 class="card__title2">Logo / Favicon</h3>
+                <p class="card__subtitle2">Cole base64 (ou URL) — seu script já suporta isso.</p>
+              </div>
+            </div>
+            <div class="form-grid2">
+              <label class="field2 field2--full">
+  		<span>Logo base64</span>
+  		<textarea id="store_logo" rows="4" placeholder="data:image/png;base64,..."></textarea>
+
+  		<div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
+    			<button type="button" class="btn btn--ghost btn--pill" id="btnSelectLogo">
+      				📂 Carregar Logo do PC
+    			</button>
+    			<input type="file" id="store_logo_file" accept="image/*" style="display:none;">
+  		</div>
+
+  		<div id="store_logo_preview" style="margin-top:12px;"></div>
+	      </label>
+
+	      <label class="field2 field2--full">
+  		<span>Favicon</span>
+  		<input id="store_favicon" type="text" placeholder="data:image/png;base64,... ou URL" />
+
+  		<div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
+    		  <button type="button" class="btn btn--ghost btn--pill" id="btnSelectFavicon">
+      		    📂 Carregar Favicon do PC
+   		  </button>
+    		  <input type="file" id="store_favicon_file" accept="image/*" style="display:none;">
+  		</div>
+
+  		<div id="store_favicon_preview" style="margin-top:12px;"></div>
+	      </label>
+
+	      <label class="field2 field2--full">
+  	        <span>Hero Badge</span>
+  	        <input id="store_heroBadge" type="text" placeholder="✨ Catálogo atualizado">
+	      </label>
+
+	      <label class="field2 field2--full">
+  		<span>Título Hero</span>
+  		<input id="store_heroTitle" type="text" placeholder="Nosso Catálogo de Produtos">
+              </label>
+
+	      <label class="field2 field2--full">
+  		<span>Descrição Hero</span>
+  		<input id="store_heroSubtitle" type="text" placeholder="Escolha seus personalizados...">
+	      </label>
+
+	      <label class="field2">
+  	        <span>Mostrar Hero no catálogo</span>
+  	        <select id="store_showHero">
+   		  <option value="yes">Mostrar</option>
+   		  <option value="no">Esconder</option>
+ 	        </select>
+	      </label>
+            </div>
+            <div class="actions">
+              <button class="btn btn--primary btn--pill" id="btnBrandSave" type="button">Salvar Logo/Favicon</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== TAB: TEMA ===================== -->
+      <section class="tab2" id="tabTheme">
+        <div class="card card--soft">
+          <div class="card__header2">
+            <div>
+              <h3 class="card__title2">Tema (Light moderno)</h3>
+              <p class="card__subtitle2">Cores, fontes e ajustes visuais do catálogo.</p>
+            </div>
+            <span class="badge">CSS variables</span>
+          </div>
+
+          <div class="form-grid2">
+            <label class="field2">
+              <span>Cor primária</span>
+              <input id="theme_primary" type="color" value="#7c3aed" />
+            </label>
+
+            <label class="field2">
+              <span>Cor secundária</span>
+              <input id="theme_secondary" type="color" value="#a78bfa" />
+            </label>
+
+            <label class="field2">
+              <span>Fonte (Google Font URL)</span>
+              <input id="theme_fontUrl" type="text" placeholder="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" />
+            </label>
+
+            <label class="field2">
+              <span>Font-family</span>
+              <input id="theme_fontFamily" type="text" placeholder='"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial' />
+            </label>
+
+            <label class="field2">
+              <span>Tamanho base</span>
+              <input id="theme_fsBase" type="number" min="12" max="22" value="16" />
+            </label>
+
+            <label class="field2">
+              <span>Tamanho título</span>
+              <input id="theme_fsTitle" type="number" min="16" max="34" value="20" />
+            </label>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn--primary btn--pill" id="btnThemeSave" type="button">Salvar Tema</button>
+            <button class="btn btn--ghost btn--pill" id="btnThemeReset" type="button">Restaurar Light</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== TAB: MENU ===================== -->
+      <section class="tab2" id="tabMenu">
+        <div class="card card--soft">
+          <div class="card__header2">
+            <div>
+              <h3 class="card__title2">Menu / Atalhos</h3>
+              <p class="card__subtitle2">Configure links rápidos que você pode exibir no admin (ou no site, se quiser).</p>
+            </div>
+          </div>
+
+          <div id="menuList" class="list2">
+            <div class="empty__card">Seu script pode preencher esta área com itens do menu.</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn--primary btn--pill" type="button">+ Adicionar Link</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== TAB: CATEGORIAS ===================== -->
+      <section class="tab2" id="tabCategories">
+        <div class="card card--soft">
+          <div class="card__header2">
+            <div>
+              <h3 class="card__title2">Categorias</h3>
+              <p class="card__subtitle2">Ordem, ícones e visibilidade (mantendo seu modelo).</p>
+            </div>
+           <button class="btn btn--primary btn--pill" id="btnAddCategory" type="button">+ Categoria</button>
+          </div>
+
+          <div id="categoriesList" class="list2">
+            <div class="empty__card">Seu script pode renderizar as categorias aqui.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== TAB: PRODUTOS ===================== -->
+      <section class="tab2" id="tabProducts">
+        <div class="card card--soft">
+          <div class="card__header2">
+            <div>
+              <h3 class="card__title2">Produtos</h3>
+              <p class="card__subtitle2">Cards no admin, com visual leve e organizado.</p>
+            </div>
+            <button class="btn btn--primary btn--pill" id="btnAddProduct" type="button">+ Produto</button>
+          </div>
+
+          <div id="adminProductsGrid" class="admin-products-grid">
+            <div class="empty__card">Seu script pode renderizar os cards de produtos aqui.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== TAB: BANNERS ===================== -->
+      <section class="tab2" id="tabBanners">
+        <div class="card card--soft">
+          <div class="card__header2">
+            <div>
+              <h3 class="card__title2">Banners</h3>
+              <p class="card__subtitle2">Gerencie o carrossel com título, texto e botão.</p>
+            </div>
+            <button class="btn btn--primary btn--pill" id="btnAddBanner" type="button">+ Banner</button>
+          </div>
+
+          <div id="bannersList" class="list2">
+            <div class="empty__card">Seu script pode renderizar os banners aqui.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== TAB: STATS ===================== -->
+      <section class="tab2" id="tabStats">
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="muted">Visitas</div>
+            <strong id="statVisits">0</strong>
+          </div>
+          <div class="stat">
+            <div class="muted">Views (produtos)</div>
+            <strong id="statViews">0</strong>
+          </div>
+          <div class="stat">
+            <div class="muted">Pedidos (produtos)</div>
+            <strong id="statOrders">0</strong>
+          </div>
+        </div>
+
+        <div class="card card--soft">
+          <div class="card__header2">
+            <div>
+              <h3 class="card__title2">Detalhamento</h3>
+              <p class="card__subtitle2">Top produtos mais vistos e mais pedidos.</p>
+            </div>
+          </div>
+
+          <div class="split2">
+            <div class="card card--inner">
+              <h4 class="mini-title">Mais vistos</h4>
+              <div id="topViews" class="list2">
+                <div class="empty__card">Sem dados ainda.</div>
+              </div>
+            </div>
+            <div class="card card--inner">
+              <h4 class="mini-title">Mais pedidos</h4>
+              <div id="topOrders" class="list2">
+                <div class="empty__card">Sem dados ainda.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== TAB: BACKUP ===================== -->
+      <section class="tab2" id="tabBackup">
+        <div class="card card--soft">
+          <div class="card__header2">
+            <div>
+              <h3 class="card__title2">Backup</h3>
+              <p class="card__subtitle2">Exportar / Importar dados do catálogo (localStorage).</p>
+            </div>
+          </div>
+
+          <div class="split2">
+            <div class="card card--inner">
+              <h4 class="mini-title">Exportar</h4>
+              <p class="muted">Gera um JSON com loja, produtos, categorias, banners, tema, stats.</p>
+              <button class="btn btn--primary btn--pill" id="btnExport" type="button">Exportar JSON</button>
+              <textarea id="exportArea" rows="8" placeholder="Seu JSON aparece aqui..." style="margin-top:10px;"></textarea>
+            </div>
+
+            <div class="card card--inner">
+              <h4 class="mini-title">Importar</h4>
+              <p class="muted">Cole um JSON e importe para o localStorage.</p>
+              <textarea id="importArea" rows="8" placeholder="Cole aqui o JSON..." style="margin-top:10px;"></textarea>
+              <div class="actions" style="margin-top:10px;">
+                <button class="btn btn--primary btn--pill" id="btnImport" type="button">Importar</button>
+                <button class="btn btn--ghost btn--pill" id="btnClear" type="button">Limpar Tudo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="admin-footer2">
+        <p class="muted">© <span id="year"></span> Admin do Catálogo</p>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- ===================== JS (tabs + backup + stats básico) ===================== -->
+  <script>
+    // ======= Mesmas chaves do seu catálogo =======
+    const LS = {
+      store: "catalog_store",
+      products: "catalog_products",
+      categories: "catalog_categories",
+      banners: "catalog_banners",
+      theme: "catalog_theme",
+      menu: "catalog_menu",
+      stats: "catalog_stats",
+      history: "catalog_history"
+    };
+
+    const safeParse = (v, fallback) => { try { return JSON.parse(v) ?? fallback; } catch { return fallback; } };
+    const get = (key, fallback) => safeParse(localStorage.getItem(key), fallback);
+    const set = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+
+    // ======= Tabs =======
+    const tabButtons = Array.from(document.querySelectorAll(".admin-tab2"));
+    const tabs = Array.from(document.querySelectorAll(".tab2"));
+    function openTab(id){
+      tabButtons.forEach(b => b.classList.toggle("is-active", b.dataset.tab === id));
+      tabs.forEach(t => t.classList.toggle("is-active", t.id === id));
+      // mobile: fecha sidebar
+      document.body.classList.remove("admin-nav-open");
+    }
+    tabButtons.forEach(b => b.addEventListener("click", () => openTab(b.dataset.tab)));
+
+    // ======= Mobile sidebar =======
+    const btnMobileNav = document.getElementById("btnMobileNav");
+    btnMobileNav?.addEventListener("click", () => document.body.classList.toggle("admin-nav-open"));
+
+    // ======= Loja (carregar/salvar básico) =======
+    function loadStoreFields(){
+      const store = get(LS.store, {});
+      document.getElementById("store_name").value = store.name || "";
+      document.getElementById("store_whatsapp").value = store.whatsapp || "";
+      document.getElementById("store_notice").value = store.siteNotice || "";
+      document.getElementById("store_open").value = store.storeOpen || "open";
+      document.getElementById("store_showPrices").value = store.showPrices || "yes";
+      document.getElementById("store_footer").value = store.footer || "";
+      document.getElementById("store_whatsTemplate").value = store.whatsMessageTemplate || "";
+      document.getElementById("store_logo").value = store.logoBase64 || "";
+      document.getElementById("store_favicon").value = store.favicon || "";
+      document.getElementById("store_showHero").value = store.showHero || "yes";
+    }
+    function saveStoreFields(){
+      const store = get(LS.store, {});
+      store.name = document.getElementById("store_name").value.trim();
+      store.whatsapp = document.getElementById("store_whatsapp").value.trim();
+      store.siteNotice = document.getElementById("store_notice").value.trim();
+      store.storeOpen = document.getElementById("store_open").value;
+      store.showPrices = document.getElementById("store_showPrices").value;
+      store.footer = document.getElementById("store_footer").value.trim();
+      store.whatsMessageTemplate = document.getElementById("store_whatsTemplate").value.trim();
+      store.logoBase64 = document.getElementById("store_logo").value.trim();
+      store.favicon = document.getElementById("store_favicon").value.trim();
+      store.heroBadge = document.getElementById("store_heroBadge").value.trim();
+      store.heroTitle = document.getElementById("store_heroTitle").value.trim();
+      store.heroSubtitle = document.getElementById("store_heroSubtitle").value.trim();
+      store.showHero = document.getElementById("store_showHero").value;
+      set(LS.store, store);
+      alert("✅ Loja salva!");
+    }
+
+    document.getElementById("btnStoreLoad")?.addEventListener("click", loadStoreFields);
+    document.getElementById("btnStoreSave")?.addEventListener("click", saveStoreFields);
+    document.getElementById("btnTemplateSave")?.addEventListener("click", saveStoreFields);
+    document.getElementById("btnBrandSave")?.addEventListener("click", saveStoreFields);
+
+    // ======= Tema (salvar/reset básico) =======
+    function loadThemeFields(){
+      const theme = get(LS.theme, {});
+      document.getElementById("theme_primary").value = theme.primary || "#7c3aed";
+      document.getElementById("theme_secondary").value = theme.secondary || "#a78bfa";
+      document.getElementById("theme_fontUrl").value = theme.fontUrl || "";
+      document.getElementById("theme_fontFamily").value = theme.fontFamily || "";
+      document.getElementById("theme_fsBase").value = Number(theme.fontSizeBase || 16);
+      document.getElementById("theme_fsTitle").value = Number(theme.fontSizeTitle || 20);
+    }
+    function saveThemeFields(){
+      const theme = get(LS.theme, {});
+      theme.primary = document.getElementById("theme_primary").value;
+      theme.secondary = document.getElementById("theme_secondary").value;
+      theme.fontUrl = document.getElementById("theme_fontUrl").value.trim();
+      theme.fontFamily = document.getElementById("theme_fontFamily").value.trim() ||
+        '"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial';
+      theme.fontSizeBase = Number(document.getElementById("theme_fsBase").value || 16);
+      theme.fontSizeTitle = Number(document.getElementById("theme_fsTitle").value || 20);
+      set(LS.theme, theme);
+      alert("✅ Tema salvo!");
+    }
+    function resetThemeLight(){
+      set(LS.theme, {
+        fontUrl: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap",
+        fontFamily: '"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial',
+        fontSizeBase: 16,
+        fontSizeTitle: 20,
+        primary: "#7c3aed",
+        secondary: "#a78bfa",
+        background: "#f6f7fb",
+        text: "#0f172a",
+        button: "#7c3aed",
+        buttonHover: "#6d28d9",
+        bgImage: ""
+      });
+      loadThemeFields();
+      alert("✅ Tema light restaurado!");
+    }
+    document.getElementById("btnThemeSave")?.addEventListener("click", saveThemeFields);
+    document.getElementById("btnThemeReset")?.addEventListener("click", resetThemeLight);
+
+    // ======= Stats básico =======
+    function loadStats(){
+      const stats = get(LS.stats, { visits:0, productViews:{}, productOrders:{} });
+      const viewsTotal = Object.values(stats.productViews || {}).reduce((a,b)=>a+(b||0),0);
+      const ordersTotal = Object.values(stats.productOrders || {}).reduce((a,b)=>a+(b||0),0);
+
+      document.getElementById("statVisits").textContent = stats.visits || 0;
+      document.getElementById("statViews").textContent = viewsTotal;
+      document.getElementById("statOrders").textContent = ordersTotal;
+    }
+
+    // ======= Backup Export/Import =======
+    function exportAll(){
+      const payload = {
+        store: get(LS.store, {}),
+        products: get(LS.products, []),
+        categories: get(LS.categories, []),
+        banners: get(LS.banners, []),
+        theme: get(LS.theme, {}),
+        menu: get(LS.menu, []),
+        stats: get(LS.stats, {}),
+        history: get(LS.history, [])
+      };
+      document.getElementById("exportArea").value = JSON.stringify(payload, null, 2);
+    }
+    function importAll(){
+      const raw = document.getElementById("importArea").value.trim();
+      if(!raw) return alert("Cole um JSON primeiro.");
+      const data = safeParse(raw, null);
+      if(!data) return alert("JSON inválido.");
+
+      if(data.store) set(LS.store, data.store);
+      if(data.products) set(LS.products, data.products);
+      if(data.categories) set(LS.categories, data.categories);
+      if(data.banners) set(LS.banners, data.banners);
+      if(data.theme) set(LS.theme, data.theme);
+      if(data.menu) set(LS.menu, data.menu);
+      if(data.stats) set(LS.stats, data.stats);
+      if(data.history) set(LS.history, data.history);
+
+      alert("✅ Importado com sucesso!");
+      loadStoreFields();
+      loadThemeFields();
+      loadStats();
+    }
+    function clearAll(){
+      if(!confirm("Tem certeza? Isso apaga TUDO do catálogo no navegador.")) return;
+      Object.values(LS).forEach(k => localStorage.removeItem(k));
+      alert("✅ Limpo. Recarregue o catálogo para recriar os dados base.");
+    }
+
+    document.getElementById("btnExport")?.addEventListener("click", exportAll);
+    document.getElementById("btnImport")?.addEventListener("click", importAll);
+    document.getElementById("btnClear")?.addEventListener("click", clearAll);
+
+    // ======= Botão salvar global =======
+    document.getElementById("btnSaveAll")?.addEventListener("click", () => {
+      saveStoreFields();
+      saveThemeFields();
+      loadStats();
+    });
+
+    // ======= Extras =======
+    document.getElementById("year").textContent = new Date().getFullYear();
+    loadStoreFields();
+    loadThemeFields();
+    loadStats();
+  </script>
+<!-- =============== MODAL CATEGORIA =============== -->
+<div class="modal" id="modalCategory" aria-hidden="true">
+  <div class="modal__backdrop" data-close="modalCategory"></div>
+  <div class="modal__panel">
+    <div class="modal__head">
+      <h3 id="catModalTitle">Categoria</h3>
+      <button class="icon-btn" type="button" data-close="modalCategory">✕</button>
+    </div>
+
+    <div class="modal__body">
+      <input type="hidden" id="cat_id" />
+      <label class="field2 field2--full">
+        <span>Nome da categoria</span>
+        <input id="cat_name" type="text" placeholder="Ex.: Canecas" />
+      </label>
+    </div>
+
+    <div class="modal__foot">
+      <button class="btn btn--ghost btn--pill" type="button" data-close="modalCategory">Cancelar</button>
+      <button class="btn btn--primary btn--pill" id="cat_save" type="button">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- =============== MODAL PRODUTO =============== -->
+<div class="modal" id="modalProduct" aria-hidden="true">
+  <div class="modal__backdrop" data-close="modalProduct"></div>
+  <div class="modal__panel">
+    <div class="modal__head">
+      <h3 id="prodModalTitle">Produto</h3>
+      <button class="icon-btn" type="button" data-close="modalProduct">✕</button>
+    </div>
+
+    <div class="modal__body">
+      <input type="hidden" id="prod_id" />
+
+      <div class="form-grid2">
+        <label class="field2 field2--full">
+          <span>Nome do produto</span>
+          <input id="prod_name" type="text" placeholder="Ex.: Caneca Personalizada" />
+        </label>
+
+        <label class="field2">
+          <span>Preço (apenas número)</span>
+          <input id="prod_price" type="number" step="0.01" placeholder="39.90" />
+        </label>
+
+        <label class="field2">
+          <span>SKU (opcional)</span>
+          <input id="prod_sku" type="text" placeholder="SKU-001" />
+        </label>
+
+        <label class="field2 field2--full">
+  	    <span>Imagem (URL ou base64)</span>
+            <input id="prod_image" type="text" placeholder="https://... ou data:image/png;base64,..." />
+  
+  	    <div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
+                <button type="button" class="btn btn--ghost btn--pill" id="btnSelectImage">
+                    📂 Selecionar do PC
+                </button>
+                <input type="file" id="prod_image_file" accept="image/*" style="display:none;">
+            </div>
+
+            <div id="prod_image_preview" style="margin-top:12px;"></div>
+	</label>
+
+        <label class="field2">
+          <span>Categoria</span>
+          <select id="prod_category"></select>
+        </label>
+
+        <label class="field2">
+          <span>Promoção?</span>
+          <select id="prod_promo">
+            <option value="no">Não</option>
+            <option value="yes">Sim</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div class="modal__foot">
+      <button class="btn btn--ghost btn--pill" type="button" data-close="modalProduct">Cancelar</button>
+      <button class="btn btn--primary btn--pill" id="prod_save" type="button">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- =============== MODAL BANNER =============== -->
+<div class="modal" id="modalBanner" aria-hidden="true">
+  <div class="modal__backdrop" data-close="modalBanner"></div>
+  <div class="modal__panel">
+    <div class="modal__head">
+      <h3 id="bannerModalTitle">Banner</h3>
+      <button class="icon-btn" type="button" data-close="modalBanner">✕</button>
+    </div>
+
+    <div class="modal__body">
+      <input type="hidden" id="banner_id" />
+
+      <div class="form-grid2">
+        <label class="field2 field2--full">
+          <span>Título</span>
+          <input id="banner_title" type="text" placeholder="Ex.: Promoção da Semana" />
+        </label>
+
+        <label class="field2 field2--full">
+          <span>Texto</span>
+          <input id="banner_text" type="text" placeholder="Ex.: Descontos especiais no Pix" />
+        </label>
+
+        <label class="field2 field2--full">
+          <span>Imagem (URL ou base64)</span>
+          <input id="banner_image" type="text" placeholder="https://... ou data:image/png;base64,..." />
+
+          <div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
+            <button type="button" class="btn btn--ghost btn--pill" id="btnSelectBannerImage">📂 Selecionar do PC</button>
+            <input type="file" id="banner_image_file" accept="image/*" style="display:none;">
+          </div>
+
+          <div id="banner_image_preview" style="margin-top:12px;"></div>
+        </label>
+
+        <label class="field2">
+          <span>Texto do botão (opcional)</span>
+          <input id="banner_btnText" type="text" placeholder="Ex.: Ver ofertas" />
+        </label>
+
+        <label class="field2">
+          <span>Link do botão (opcional)</span>
+          <input id="banner_btnLink" type="text" placeholder="https://..." />
+        </label>
+      </div>
+    </div>
+
+    <div class="modal__foot">
+      <button class="btn btn--ghost btn--pill" type="button" data-close="modalBanner">Cancelar</button>
+      <button class="btn btn--primary btn--pill" id="banner_save" type="button">Salvar</button>
+    </div>
+  </div>
+</div>
+<!-- JS do Admin (novo) -->
+<script src="admin.js"></script>
+</body>
+</html>

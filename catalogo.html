@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Título dinâmico (admin controla) -->
+  <title id="siteTitle">Catálogo</title>
+
+  <!-- Favicon dinâmico (admin controla) -->
+  <link id="favicon" rel="icon" />
+
+  <!-- CSS do site -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="catalog-body">
+
+  <!-- (Opcional) Barra de aviso será injetada pelo script.js se tiver texto/loja fechada -->
+
+  <!-- ================= TOP NAV (MELHORADO) ================= -->
+  <!-- Mantive os IDs importantes: header, logoImg, storeName, searchInput, menuBtn -->
+  <header id="header" class="top-nav">
+    <div class="nav-container">
+
+      <!-- Esquerda: Logo + Nome -->
+      <div class="nav-left">
+        <a href="#" class="brand">
+          <img id="logoImg" alt="Logo da loja" />
+          <h1 id="storeName">Minha Loja</h1>
+        </a>
+      </div>
+
+      <!-- Centro: Links -->
+      <nav class="nav-center" aria-label="Links do topo">
+        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="#productsGrid">Produtos</a>
+        <a class="nav-link" href="#categoryBar">Categorias</a>
+        <a class="nav-link" href="#footerText">Contato</a>
+      </nav>
+
+      <!-- Direita: Busca + Carrinho + Menu mobile -->
+      <div class="nav-right">
+        <div class="search-area">
+          <input id="searchInput" type="text" placeholder="Buscar produto..." />
+        </div>
+
+        <button class="btn btn--primary btn--pill" id="cartBtn" type="button" title="Carrinho">
+          Ver Carrinho
+        </button>
+
+        <!-- Botão hambúrguer (aparece no mobile via CSS) -->
+        <button id="menuBtn" type="button" class="icon-btn" aria-label="Abrir categorias">☰</button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= HERO (NOVO / MELHORADO) ================= -->
+  <section class="hero" aria-label="Hero do catálogo">
+    <div class="hero__inner">
+      <div class="hero__content">
+       <span class="hero__badge" id="heroBadge"></span>
+       <h2 class="hero__title" id="heroTitle"></h2>
+       <p class="hero__subtitle" id="heroSubtitle"></p>
+
+        <div class="hero__actions">
+          <a class="btn btn--primary btn--pill" href="#productsGrid">Explorar Produtos</a>
+          <a class="btn btn--ghost btn--pill" href="#categoryBar">Ver Categorias</a>
+        </div>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <div class="hero-card">
+          <div class="hero-card__top">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+          </div>
+          <div class="hero-card__body">
+            <div class="skel skel-title"></div>
+            <div class="skel skel-line"></div>
+            <div class="skel skel-line short"></div>
+            <div class="skel skel-img"></div>
+            <div class="skel skel-btn"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SHELL (CARD CENTRAL) ================= -->
+  <div class="site-shell">
+
+    <!-- ================= CATEGORIAS (DESKTOP) ================= -->
+    <nav id="categoryBar" aria-label="Categorias"></nav>
+
+    <!-- ================= MENU MOBILE (OVERLAY) ================= -->
+    <!-- O script.js monta o painel interno automaticamente -->
+    <div id="mobileMenu" class="mobile-menu" aria-hidden="true"></div>
+
+    <!-- ================= BANNERS / OUTDOOR ================= -->
+    <section id="bannerSection" aria-label="Banners">
+      <div id="bannerSlider"></div>
+      <div id="bannerDots"></div>
+    </section>
+
+    <!-- ================= FILTROS ================= -->
+    <section id="filters" aria-label="Filtros">
+      <select id="priceFilter" aria-label="Ordenar por preço">
+        <option value="">Preço</option>
+        <option value="low">Menor preço</option>
+        <option value="high">Maior preço</option>
+      </select>
+
+      <select id="promoFilter" aria-label="Filtrar por promoção">
+        <option value="">Promoção</option>
+        <option value="yes">Somente promoções</option>
+      </select>
+
+      <select id="orderFilter" aria-label="Ordenar produtos">
+        <option value="recent">Mais recentes</option>
+        <option value="popular">Mais pedidos</option>
+      </select>
+    </section>
+
+    <!-- ================= PRODUTOS ================= -->
+    <main id="productsGrid" aria-label="Lista de produtos"></main>
+
+    <p id="emptyMessage">Nenhum produto encontrado.</p>
+
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer id="footerText"></footer>
+
+  <!-- JS do catálogo -->
+  <script src="script.js"></script>
+
+</body>
+</html>
