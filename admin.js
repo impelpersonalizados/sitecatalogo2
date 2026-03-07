@@ -518,7 +518,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderBannersAdmin(q);
   });
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", async (e) => {
     const t = e.target;
 
     const catEdit = t?.getAttribute?.("data-cat-edit");
@@ -668,4 +668,5 @@ function setupBrandUploads(){
     };
     reader.readAsDataURL(file);
   });
+
 }
