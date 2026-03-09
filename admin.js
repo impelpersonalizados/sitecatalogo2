@@ -223,8 +223,8 @@ async function loadThemeFields() {
 
   const t = theme || {};
 
-  document.getElementById("theme_primary").value = t.primary || "#7c3aed";
-  document.getElementById("theme_secondary").value = t.secondary || "#a78bfa";
+  document.getElementById("theme_primary").value = t.primary_color || "#7c3aed";
+  document.getElementById("theme_secondary").value = t.secondary_color || "#a78bfa";
   document.getElementById("theme_background").value = t.background || "#f6f7fb";
   document.getElementById("theme_buttonColor").value = t.button_color || "#7c3aed";
   document.getElementById("theme_fontUrl").value = t.font_url || "";
@@ -235,8 +235,8 @@ async function loadThemeFields() {
 async function saveThemeFields() {
   const payload = {
     id: 1,
-    primary: document.getElementById("theme_primary").value,
-    secondary: document.getElementById("theme_secondary").value,
+    primary_color: document.getElementById("theme_primary").value,
+    secondary_color: document.getElementById("theme_secondary").value,
     background: document.getElementById("theme_background").value,
     button_color: document.getElementById("theme_buttonColor").value,
     font_url: document.getElementById("theme_fontUrl").value.trim(),
@@ -258,8 +258,8 @@ async function saveThemeFields() {
 async function resetThemeLight() {
   const payload = {
     id: 1,
-    primary: "#7c3aed",
-    secondary: "#a78bfa",
+    primary_color: "#7c3aed",
+    secondary_color: "#a78bfa",
     background: "#f6f7fb",
     button_color: "#7c3aed",
     font_url: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap",
