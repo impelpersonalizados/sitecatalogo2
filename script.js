@@ -121,8 +121,8 @@ async function applyTheme() {
 
   const root = document.documentElement;
 
-  if (theme.primary) root.style.setProperty("--primary", theme.primary);
-  if (theme.secondary) root.style.setProperty("--secondary", theme.secondary);
+  if (theme.primary_color) root.style.setProperty("--primary", theme.primary_color);
+  if (theme.secondary_color) root.style.setProperty("--secondary", theme.secondary_color);
   if (theme.background) root.style.setProperty("--bg", theme.background);
   if (theme.button_color) root.style.setProperty("--btn", theme.button_color);
 
