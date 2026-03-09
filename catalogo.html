@@ -4,26 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Título dinâmico (admin controla) -->
   <title id="siteTitle">Catálogo</title>
-
-  <!-- Favicon dinâmico (admin controla) -->
   <link id="favicon" rel="icon" />
 
-  <!-- CSS do site -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="catalog-body">
 
-  <!-- (Opcional) Barra de aviso será injetada pelo script.js se tiver texto/loja fechada -->
-
-  <!-- ================= TOP NAV (MELHORADO) ================= -->
-  <!-- Mantive os IDs importantes: header, logoImg, storeName, searchInput, menuBtn -->
   <header id="header" class="top-nav">
     <div class="nav-container">
-
-      <!-- Esquerda: Logo + Nome -->
       <div class="nav-left">
         <a href="#" class="brand">
           <img id="logoImg" alt="Logo da loja" />
@@ -31,7 +21,6 @@
         </a>
       </div>
 
-      <!-- Centro: Links -->
       <nav class="nav-center" aria-label="Links do topo">
         <a class="nav-link" href="#">Home</a>
         <a class="nav-link" href="#productsGrid">Produtos</a>
@@ -39,28 +28,22 @@
         <a class="nav-link" href="#footerText">Contato</a>
       </nav>
 
-      <!-- Direita: Busca + Carrinho + Menu mobile -->
       <div class="nav-right">
         <div class="search-area">
           <input id="searchInput" type="text" placeholder="Buscar produto..." />
         </div>
 
-        
-
-        <!-- Botão hambúrguer (aparece no mobile via CSS) -->
         <button id="menuBtn" type="button" class="icon-btn" aria-label="Abrir categorias">☰</button>
       </div>
-
     </div>
   </header>
 
-  <!-- ================= HERO (NOVO / MELHORADO) ================= -->
   <section class="hero" aria-label="Hero do catálogo">
     <div class="hero__inner">
       <div class="hero__content">
-       <span class="hero__badge" id="heroBadge"></span>
-       <h2 class="hero__title" id="heroTitle"></h2>
-       <p class="hero__subtitle" id="heroSubtitle"></p>
+        <span class="hero__badge" id="heroBadge"></span>
+        <h2 class="hero__title" id="heroTitle"></h2>
+        <p class="hero__subtitle" id="heroSubtitle"></p>
 
         <div class="hero__actions">
           <a class="btn btn--primary btn--pill" href="#productsGrid">Explorar Produtos</a>
@@ -85,40 +68,25 @@
     </div>
   </section>
 
-  <!-- ================= SHELL (CARD CENTRAL) ================= -->
   <div class="site-shell">
-
-    <!-- ================= CATEGORIAS (DESKTOP) ================= -->
     <nav id="categoryBar" aria-label="Categorias"></nav>
 
-    <!-- ================= MENU MOBILE (OVERLAY) ================= -->
     <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+      <div class="panel">
+        <div class="top">
+          <strong>Categorias</strong>
+          <button class="icon-btn" id="closeMobileMenu" type="button" aria-label="Fechar menu">✕</button>
+        </div>
 
-  	<div class="panel">
-
-           <div class="top">
-              <strong>Categorias</strong>
-
-     	      <!-- botão de fechar (TEM QUE EXISTIR) -->
-              <button class="icon-btn" id="closeMobileMenu" type="button" aria-label="Fechar menu">
-               ✕
-           </button>
+        <div id="mobileMenuCategories"></div>
+      </div>
     </div>
 
-    <!-- aqui o JS vai montar os botões de categoria -->
-    <div id="mobileMenuCategories"></div>
-
-  </div>
-
-</div>
-
-    <!-- ================= BANNERS / OUTDOOR ================= -->
     <section id="bannerSection" aria-label="Banners">
       <div id="bannerSlider"></div>
       <div id="bannerDots"></div>
     </section>
 
-    <!-- ================= FILTROS ================= -->
     <section id="filters" aria-label="Filtros">
       <select id="priceFilter" aria-label="Ordenar por preço">
         <option value="">Preço</option>
@@ -137,21 +105,15 @@
       </select>
     </section>
 
-    <!-- ================= PRODUTOS ================= -->
     <main id="productsGrid" aria-label="Lista de produtos"></main>
 
     <p id="emptyMessage">Nenhum produto encontrado.</p>
-
   </div>
 
-  <!-- ================= FOOTER ================= -->
   <footer id="footerText"></footer>
 
-  <!-- JS do catálogo -->
-  
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="script.js"></script>
-
 </body>
 </html>
