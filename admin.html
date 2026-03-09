@@ -168,135 +168,138 @@
 
       <!-- ===================== TAB: LOJA ===================== -->
       <section class="tab2 is-active" id="tabStore">
-        <div class="card card--soft">
-          <div class="card__header2">
-            <div>
-              <h3 class="card__title2">Dados da Loja</h3>
-              <p class="card__subtitle2">Nome, WhatsApp, aviso de loja, rodapé e informações.</p>
-            </div>
-            <span class="badge">LocalStorage</span>
-          </div>
+  <div class="card card--soft">
+    <div class="card__header2">
+      <div>
+        <h3 class="card__title2">Dados da Loja</h3>
+        <p class="card__subtitle2">Nome, WhatsApp, aviso de loja, rodapé e informações.</p>
+      </div>
+      <span class="badge">Supabase</span>
+    </div>
 
-          <div class="form-grid2">
-            <label class="field2">
-              <span>Nome da loja</span>
-              <input id="store_name" type="text" placeholder="Minha Loja" />
-            </label>
+    <div class="form-grid2">
+      <label class="field2">
+        <span>Nome da loja</span>
+        <input id="store_name" type="text" placeholder="Minha Loja" />
+      </label>
 
-            <label class="field2">
-              <span>WhatsApp (DDD + número)</span>
-              <input id="store_whatsapp" type="text" placeholder="5599999999999" />
-              <small class="hint">Sem espaços. Ex.: 55 + DDD + número</small>
-            </label>
+      <label class="field2">
+        <span>WhatsApp (DDD + número)</span>
+        <input id="store_whatsapp" type="text" placeholder="5599999999999" />
+        <small class="hint">Sem espaços. Ex.: 55 + DDD + número</small>
+      </label>
 
-            <label class="field2 field2--full">
-              <span>Aviso do site (barra no topo)</span>
-              <input id="store_notice" type="text" placeholder="Ex.: Promoções por tempo limitado!" />
-            </label>
+      <label class="field2 field2--full">
+        <span>Aviso do site (barra no topo)</span>
+        <input id="store_notice" type="text" placeholder="Ex.: Promoções por tempo limitado!" />
+      </label>
 
-            <label class="field2">
-              <span>Loja está:</span>
-              <select id="store_open">
-                <option value="open">Aberta</option>
-                <option value="closed">Fechada</option>
-              </select>
-            </label>
+      <label class="field2">
+        <span>Loja está:</span>
+        <select id="store_open">
+          <option value="open">Aberta</option>
+          <option value="closed">Fechada</option>
+        </select>
+      </label>
 
-            <label class="field2">
-              <span>Mostrar preços:</span>
-              <select id="store_showPrices">
-                <option value="yes">Sim</option>
-                <option value="no">Não</option>
-              </select>
-            </label>
+      <label class="field2">
+        <span>Mostrar preços:</span>
+        <select id="store_showPrices">
+          <option value="yes">Sim</option>
+          <option value="no">Não</option>
+        </select>
+      </label>
 
-            <label class="field2 field2--full">
-              <span>Rodapé</span>
-              <input id="store_footer" type="text" placeholder="© 2026 Minha Loja" />
-            </label>
-          </div>
+      <label class="field2 field2--full">
+        <span>Rodapé</span>
+        <input id="store_footer" type="text" placeholder="© 2026 Minha Loja" />
+      </label>
+    </div>
 
-          <div class="actions">
-            <button class="btn btn--primary btn--pill" id="btnStoreSave" type="button">Salvar Loja</button>
-            <button class="btn btn--ghost btn--pill" id="btnStoreLoad" type="button">Recarregar</button>
-          </div>
+    <div class="actions">
+      <button class="btn btn--primary btn--pill" id="btnStoreSave" type="button">Salvar Loja</button>
+      <button class="btn btn--ghost btn--pill" id="btnStoreLoad" type="button">Recarregar</button>
+    </div>
+  </div>
+
+  <div class="split2">
+    <div class="card card--soft">
+      <div class="card__header2">
+        <div>
+          <h3 class="card__title2">Mensagem do WhatsApp</h3>
+          <p class="card__subtitle2">Use {NOME}, {PRECO}, {SKU}, {LINK}</p>
         </div>
+      </div>
 
-        <div class="split2">
-          <div class="card card--soft">
-            <div class="card__header2">
-              <div>
-                <h3 class="card__title2">Mensagem do WhatsApp</h3>
-                <p class="card__subtitle2">Use {NOME}, {PRECO}, {SKU}, {LINK}</p>
-              </div>
-            </div>
-            <label class="field2 field2--full">
-              <span>Template</span>
-              <textarea id="store_whatsTemplate" rows="4" placeholder="Olá! Quero pedir o produto: {NOME} - {PRECO}"></textarea>
-            </label>
-            <div class="actions">
-              <button class="btn btn--primary btn--pill" id="btnTemplateSave" type="button">Salvar Template</button>
-            </div>
+      <label class="field2 field2--full">
+        <span>Template</span>
+        <textarea id="store_whatsTemplate" rows="4" placeholder="Olá! Quero pedir o produto: {NOME} - {PRECO}"></textarea>
+      </label>
+
+      <div class="actions">
+        <button class="btn btn--primary btn--pill" id="btnTemplateSave" type="button">Salvar Template</button>
+      </div>
+    </div>
+
+    <div class="card card--soft">
+      <div class="card__header2">
+        <div>
+          <h3 class="card__title2">Logo / Favicon / Hero</h3>
+          <p class="card__subtitle2">Imagens via URL/Cloudinary e textos do hero do catálogo.</p>
+        </div>
+      </div>
+
+      <div class="form-grid2">
+        <label class="field2 field2--full">
+          <span>Logo</span>
+          <input id="store_logo" type="text" placeholder="https://...">
+          <div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
+            <button type="button" class="btn btn--ghost btn--pill" id="btnSelectLogo">📂 Carregar Logo do PC</button>
+            <input type="file" id="store_logo_file" accept="image/*" style="display:none;">
           </div>
+          <div id="store_logo_preview" style="margin-top:12px;"></div>
+        </label>
 
-          <div class="card card--soft">
-            <div class="card__header2">
-              <div>
-                <h3 class="card__title2">Logo / Favicon</h3>
-                <p class="card__subtitle2">Cole base64 (ou URL) — seu script já suporta isso.</p>
-              </div>
-            </div>
-            <div class="form-grid2">
-              <label class="field2 field2--full">
-  		<span>Logo base64</span>
-  		<textarea id="store_logo" rows="4" placeholder="data:image/png;base64,..."></textarea>
+        <label class="field2 field2--full">
+          <span>Favicon</span>
+          <input id="store_favicon" type="text" placeholder="https://...">
+          <div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
+            <button type="button" class="btn btn--ghost btn--pill" id="btnSelectFavicon">📂 Carregar Favicon do PC</button>
+            <input type="file" id="store_favicon_file" accept="image/*" style="display:none;">
+          </div>
+          <div id="store_favicon_preview" style="margin-top:12px;"></div>
+        </label>
 
-  		<div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
-    			<button type="button" class="btn btn--ghost btn--pill" id="btnSelectLogo">
-      				📂 Carregar Logo do PC
-    			</button>
-    			<input type="file" id="store_logo_file" accept="image/*" style="display:none;">
-  		</div>
+        <label class="field2 field2--full">
+          <span>Hero Badge</span>
+          <input id="store_heroBadge" type="text" placeholder="✨ Catálogo atualizado">
+        </label>
 
-  		<div id="store_logo_preview" style="margin-top:12px;"></div>
-	      </label>
+        <label class="field2 field2--full">
+          <span>Título Hero</span>
+          <input id="store_heroTitle" type="text" placeholder="Nosso Catálogo de Produtos">
+        </label>
 
-	      <label class="field2 field2--full">
-  		<span>Favicon</span>
-  		<input id="store_favicon" type="text" placeholder="data:image/png;base64,... ou URL" />
+        <label class="field2 field2--full">
+          <span>Descrição Hero</span>
+          <input id="store_heroSubtitle" type="text" placeholder="Escolha seus personalizados...">
+        </label>
 
-  		<div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
-    		  <button type="button" class="btn btn--ghost btn--pill" id="btnSelectFavicon">
-      		    📂 Carregar Favicon do PC
-   		  </button>
-    		  <input type="file" id="store_favicon_file" accept="image/*" style="display:none;">
-  		</div>
+        <label class="field2">
+          <span>Mostrar Hero no catálogo</span>
+          <select id="store_showHero">
+            <option value="yes">Mostrar</option>
+            <option value="no">Esconder</option>
+          </select>
+        </label>
+      </div>
 
-  		<div id="store_favicon_preview" style="margin-top:12px;"></div>
-	      </label>
-
-	      <label class="field2 field2--full">
-  	        <span>Hero Badge</span>
-  	        <input id="store_heroBadge" type="text" placeholder="✨ Catálogo atualizado">
-	      </label>
-
-	      <label class="field2 field2--full">
-  		<span>Título Hero</span>
-  		<input id="store_heroTitle" type="text" placeholder="Nosso Catálogo de Produtos">
-              </label>
-
-	      <label class="field2 field2--full">
-  		<span>Descrição Hero</span>
-  		<input id="store_heroSubtitle" type="text" placeholder="Escolha seus personalizados...">
-	      </label>
-
-	      <label class="field2">
-  	        <span>Mostrar Hero no catálogo</span>
-  	        <select id="store_showHero">
-   		  <option value="yes">Mostrar</option>
-   		  <option value="no">Esconder</option>
- 	        </select>
-	      </label>
+      <div class="actions">
+        <button class="btn btn--primary btn--pill" id="btnBrandSave" type="button">Salvar Logo/Favicon/Hero</button>
+      </div>
+    </div>
+  </div>
+</section>
               <!-- ================= CORES DO SITE ================= -->
 
 	      <label class="field2">
@@ -866,4 +869,5 @@
 <script src="supabase-config.js"></script>
 <script src="admin.js"></script>
 </body>
+
 </html>
