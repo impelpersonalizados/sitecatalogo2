@@ -668,5 +668,6 @@ function setupBrandUploads(){
     };
     reader.readAsDataURL(file);
   });
-}}
+}
+
 
